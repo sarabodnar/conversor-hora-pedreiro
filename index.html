@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Horas de Pedreiro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 50px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .options, .areas {
+            text-align: left;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Horas de Pedreiro</h1>
+        <p>Insira o tempo estimado em horas para o trabalho:</p>
+        <input type="number" id="horas" placeholder="Ex: 2">
+        
+        <div class="options">
+            <h3>Selecione as condições extras (intempéries):</h3>
+            <input type="checkbox" id="chuva"> Dia de chuva (atraso de 2 horas)<br>
+            <input type="checkbox" id="cafe"> Pausa para o café (atraso de 1 hora)<br>
+            <input type="checkbox" id="cagada"> Cagada remunerada (atraso de 45 minutos)<br>
+        </div>
+
+        <div class="areas">
+            <h3>Selecione as áreas adicionais a serem criadas:</h3>
+            <input type="checkbox" id="vaso"> Vaso motoquinha / jet-ski (banheiro estilo Japão) - 2 semanas<br>
+            <input type="checkbox" id="fumante"> Área da fumaça (área de fumantes) - 2 semanas e meia<br>
+            <input type="checkbox" id="cozinha"> Quebradeira da cozinha - 1 dia e meio<br>
+        </div>
+
+        <button onclick="converterHoras()">Converter</button>
+        <p id="resultado"></p>
+    </div>
+
+    <script>
+        function converterHoras() {
+            let horasNormais = parseFloat(document.getElementById("horas").value);
+            let fatorDemora = Math.random() * (3 - 1.5) + 1.5;
+            let horasPedreiro = horasNormais * fatorDemora;
+
+            // Checar se as intempéries foram selecionadas e aplicar os adicionais
+            if (document.getElementById("chuva").checked) {
+                horasPedreiro += 2; // Atraso por dia de chuva
+            }
+            if (document.getElementById("cafe").checked) {
+                horasPedreiro += 1; // Pausa para o café
+            }
+            if (document.getElementById("cagada").checked) {
+                horasPedreiro += 0.75; // Cagada remunerada (45 minutos)
+            }
+
+            // Tempo estimado fixo para as áreas adicionais
+            let tempoAdicional = "";
+            if (document.getElementById("vaso").checked) {
+                tempoAdicional += "<br>Adicional: Banheiro com vaso motoquinha / jet-ski - 2 semanas.";
+            }
+            if (document.getElementById("fumante").checked) {
+                tempoAdicional += "<br>Adicional: Área da fumaça - 2 semanas e meia.";
+            }
+            if (document.getElementById("cozinha").checked) {
+                tempoAdicional += "<br>Adicional: Quebradeira da cozinha - 1 dia e meio.";
+            }
+
+            horasPedreiro = horasPedreiro.toFixed(2);
+            document.getElementById("resultado").innerHTML = `Esse trabalho de ${horasNormais} horas levará aproximadamente ${horasPedreiro} horas de pedreiro! ${tempoAdicional}`;
+        }
+    </script>
+</body>
+</html>
